@@ -4,10 +4,15 @@ import './index.css';
 import App from './App';
 import Journal from './Journal';
 import reportWebVitals from './reportWebVitals';
+import * as language from '@google-cloud/language';
+import { GoogleLogin } from 'react-google-login';
+
+
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <Journal />
+    <App></App>
   </React.StrictMode>,
   document.getElementById('root')
 );
