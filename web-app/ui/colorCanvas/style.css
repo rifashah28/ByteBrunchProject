@@ -1,0 +1,34 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 10%;
+  width: auto;
+  height: 64px;
+  background: linear-gradient(to left bottom, #C8B6FF, #B6FFED);
+  align-items: center;
+}
+
+#option {
+  padding: 9px 25px;
+  background-color: #FFB6C8;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease 0s;
+}
+
+#option:hover {
+  background-color: #FFC7D5;
+}
+
+#canvas {
+  width: auto;
+  height:auto;
+}
