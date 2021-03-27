@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <title>Coloring Page</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="navigation">
+          <div id="return">
+            <div id="option">
+              <img src="transparent arrow (white).png" alt="return" style="width:20px;height:20px;">
+            </div>
+          </div>
+
+          <div id="eraser">
+            <div id="option">
+              <img src="transparent eraser (white).png" alt="return" style="width:20px;height:20px;">
+            </div>
+          </div>
+
+          <div id="paint">
+            <div id="option">
+              <img src="transparent brush (white).png" alt="return" style="width:20px;height:20px;">
+            </div>
+          </div>
+
+          <div id="colorPicker">
+            <div id="colorOpt">
+              <div id="currColor"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="canvas">
+          <!-- Add coloring program here -->
+        </div>
+
+        <!-- For loading React -->
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+        <!-- Don't forget to list down React components to load here -->
+        <script src="return.js"></script> <!-- Returns user to main selection screen -->
+        <script src="eraser.js"></script> <!-- Erases filled / painted-in section of image -->
+        <script src="paint.js"></script> <!-- Paints / fills in section of image -->
+        <script src="colorPicker.js"></script>
+        <!-- Colors for Color Picker:
+        - Red: #FFADAD
+        - Orange: #FFD6A5
+        - Yellow: #FDFFB6
+        - Green: #CAFFBF
+        - Light Blue: #9BF6FF
+        - Dark Blue: #A0C4FF
+        - Purple: #BDB2FF
+        - Pink: #FFC6FF
+        - Brown: #BF9271 -->
+        <script src="canvas.js"></script> <!-- Area where image is displayed & users can click on spaces to color -->
+    </body>
+</html>
