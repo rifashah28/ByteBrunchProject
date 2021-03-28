@@ -202,6 +202,9 @@ function populateColors(colorElement) {
   }
 
   colorElement.appendChild(pickerElement);
+
+  const currColor = document.getElementById('currColor');
+  currColor.style.backgroundColor = palette[2];
 }
 
 document.addEventListener('DOMContentLoaded', () => {
