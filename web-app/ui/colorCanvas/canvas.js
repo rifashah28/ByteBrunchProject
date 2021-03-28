@@ -52,6 +52,14 @@ class Color {
 
     return actualDelta <= delta;
   }
+
+  static fromHexCode(hex) {
+      const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+      const r = parseInt(result[1], 16);
+      const g = parseInt(result[2], 16);
+      const b = parseInt(result[3], 16);
+      return new Color(r, g, b);
+  }
 }
 
 
@@ -190,20 +198,29 @@ class DrawTool {
   }
 }
 
-function populateColors(colorElement) {
+function populateColors(colorElement, drawTool) {
   const palette = ['#FFADAD', '#FFD6A5', '#FDFFB6', '#CAFFBF', '#9BF6FF', '#A0C4FF', '#BDB2FF', '#FFC6FF', '#BF9271']
   const pickerElement = document.createElement('ul');
   pickerElement.id = 'colorList'
+
+  const currColor = document.getElementById('currColor');
+
   for(const c of palette) {
     const colorChoiceElement = document.createElement('li');
-
     colorChoiceElement.style.backgroundColor = c;
+
+    const colorObj = Color.fromHexCode(c);
+    colorChoiceElement.addEventListener('click', () => {
+      drawTool.selectedColor = colorObj;
+      drawTool.drawColor = colorObj;
+      currColor.style.backgroundColor = c;
+      console.log(c);
+    })
+
     pickerElement.appendChild(colorChoiceElement);
   }
 
   colorElement.appendChild(pickerElement);
-
-  const currColor = document.getElementById('currColor');
   currColor.style.backgroundColor = palette[2];
 }
 
@@ -225,5 +242,5 @@ document.addEventListener('DOMContentLoaded', () => {
     drawTool.erase(false);
   })
 
-  populateColors(document.getElementById('colorPicker'));
+  populateColors(document.getElementById('colorPicker'), drawTool);
 });
