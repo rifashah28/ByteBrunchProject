@@ -141,7 +141,7 @@ class Coloring {
       console.log(scale, x, y, scaledWidth, scaledHeight);
       ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
     };
-    img.src = 'coloring_img/umberella-2013229_960_720.png';
+    img.src = 'coloring_img/coloring1.png';
   }
 
   fill(point, color) {
