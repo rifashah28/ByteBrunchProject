@@ -4,6 +4,16 @@
   padding: 0;
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 #navigation {
   display: flex;
   justify-content: space-between;
@@ -50,8 +60,7 @@
   background-color: transparent; /* Set this to blank so that we can change it according to certain colors chosen*/
 }
 
-#canvas {
-  width: auto;
-  height:auto;
+#canvas-container {
+  flex-grow: 1;
 }
 /* Sorry, I'm not sure what we should do for the canvas space as of this moment */
