@@ -74,10 +74,11 @@ function getPixel(imageData, point, color) {
 }
 
 class Coloring {
-  constructor(canvasElement) {
+  constructor(canvasElement, drawTool) {
     this.canvas = canvasElement;
-
     this.canvas.addEventListener('click', (e) => this.clickCanvas(e));
+
+    this.drawTool = drawTool;
   }
 
   get canvasWidth() {
@@ -105,7 +106,7 @@ class Coloring {
 
   clickCanvas(event) {
     const point = this.getCursorPosition(event);
-    this.fill(point, new Color(0xff, 0, 0, 0xff));
+    this.fill(point, this.drawTool.drawColor);
   }
 
   drawImg() {
@@ -167,9 +168,38 @@ class Coloring {
 };
 
 
+class DrawTool {
+  WHITE = new Color(0xff, 0xff, 0xff, 0xff);
+  constructor() {
+    this.selectedColor = new Color(0xff, 0, 0, 0xff);  // the color chosen for the palette
+    this.drawColor = new Color(0xff, 0, 0, 0xff);  // either the color or white if the eraser is selected
+  }
+
+  erase(eraseFlag) {
+    if(eraseFlag) {
+      this.drawColor = this.WHITE;
+    } else {
+      this.drawColor = this.selectedColor;
+    }
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
   console.log('canvas started');
+  const drawTool = new DrawTool();
+
   const canvasElement = document.getElementById('canvas');
-  const coloring = new Coloring(canvasElement);
+  const coloring = new Coloring(canvasElement, drawTool);
   coloring.start();
+
+  const eraserElement = document.getElementById('eraser');
+  eraserElement.addEventListener('click', () => {
+    drawTool.erase(true);
+  })
+
+  const paintElement = document.getElementById('paint');
+  paintElement.addEventListener('click', () => {
+    drawTool.erase(false);
+  })
 });
