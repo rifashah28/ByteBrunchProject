@@ -205,23 +205,27 @@ function populateColors(colorElement, drawTool) {
 
   const currColor = document.getElementById('currColor');
 
-  for(const c of palette) {
-    const colorChoiceElement = document.createElement('li');
-    colorChoiceElement.style.backgroundColor = c;
+  // for(const c of palette) {
+  //   const colorChoiceElement = document.createElement('li');
+  //   colorChoiceElement.style.backgroundColor = c;
 
-    const colorObj = Color.fromHexCode(c);
-    colorChoiceElement.addEventListener('click', () => {
-      drawTool.selectedColor = colorObj;
-      drawTool.drawColor = colorObj;
-      currColor.style.backgroundColor = c;
-      console.log(c);
-    })
+  //   const colorObj = Color.fromHexCode(c);
+  //   colorChoiceElement.addEventListener('click', () => {
+  //     drawTool.selectedColor = colorObj;
+  //     drawTool.drawColor = colorObj;
+  //     currColor.style.backgroundColor = c;
+  //     console.log(c);
+  //   })
 
-    pickerElement.appendChild(colorChoiceElement);
-  }
+  //   pickerElement.appendChild(colorChoiceElement);
+  // }
 
   colorElement.appendChild(pickerElement);
-  currColor.style.backgroundColor = palette[2];
+  const colorChoice = palette[3];
+  currColor.style.backgroundColor = colorChoice;
+  const colorObj = Color.fromHexCode(colorChoice);
+  drawTool.selectedColor = colorObj;
+  drawTool.drawColor = colorObj;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
