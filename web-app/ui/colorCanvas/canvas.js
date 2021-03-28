@@ -76,6 +76,12 @@ function getPixel(imageData, point, color) {
 class Coloring {
   constructor(canvasElement, drawTool) {
     this.canvas = canvasElement;
+
+    const parent = this.canvas.parentElement;
+    this.canvas.width = parent.getBoundingClientRect().width;
+    this.canvas.height = parent.getBoundingClientRect().height;
+    console.log(this.canvas.width, this.canvas.height)
+
     this.canvas.addEventListener('click', (e) => this.clickCanvas(e));
 
     this.drawTool = drawTool;
@@ -110,7 +116,7 @@ class Coloring {
   }
 
   drawImg() {
-
+    console.log(this.canvasHeight, this.canvasWidth);
     var ctx = this.getCtx();
     var img = new Image();
     img.onload = () => {
@@ -122,8 +128,9 @@ class Coloring {
       const scaledHeight = img.height * scale;
 
       const x = (this.canvasWidth - scaledWidth) / 2;
-      const y = (this.canvasHeight - scaledHeight) / 2
-      console.log(scale);
+      const y = (this.canvasHeight - scaledHeight) / 2;
+
+      console.log(scale, x, y, scaledWidth, scaledHeight);
       ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
     };
     img.src = 'coloring_img/umberella-2013229_960_720.png';
@@ -183,7 +190,6 @@ class DrawTool {
     }
   }
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('canvas started');
