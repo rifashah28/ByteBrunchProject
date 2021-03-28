@@ -174,7 +174,6 @@ class Coloring {
   }
 };
 
-
 class DrawTool {
   WHITE = new Color(0xff, 0xff, 0xff, 0xff);
   constructor() {
@@ -189,6 +188,20 @@ class DrawTool {
       this.drawColor = this.selectedColor;
     }
   }
+}
+
+function populateColors(colorElement) {
+  const palette = ['#FFADAD', '#FFD6A5', '#FDFFB6', '#CAFFBF', '#9BF6FF', '#A0C4FF', '#BDB2FF', '#FFC6FF', '#BF9271']
+  const pickerElement = document.createElement('ul');
+  pickerElement.id = 'colorList'
+  for(const c of palette) {
+    const colorChoiceElement = document.createElement('li');
+
+    colorChoiceElement.style.backgroundColor = c;
+    pickerElement.appendChild(colorChoiceElement);
+  }
+
+  colorElement.appendChild(pickerElement);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -208,4 +221,6 @@ document.addEventListener('DOMContentLoaded', () => {
   paintElement.addEventListener('click', () => {
     drawTool.erase(false);
   })
+
+  populateColors(document.getElementById('colorPicker'));
 });
