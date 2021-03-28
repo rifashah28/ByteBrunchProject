@@ -51,7 +51,6 @@
 }
 
 #canvas {
-  width: auto;
-  height:auto;
+  flex-grow: 1;
 }
 /* Sorry, I'm not sure what we should do for the canvas space as of this moment */

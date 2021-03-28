@@ -1,12 +1,11 @@
-import React from 'react';
-import './App.css';
+'use strict';
 
 class Point {
   x = 0;
   y = 0;
 
   constructor(x, y) {
-    if(x !== undefined && y !== undefined) {
+    if (x !== undefined && y !== undefined) {
       this.x = x;
       this.y = y;
     }
@@ -28,11 +27,11 @@ class Color {
   a = 0xff;
 
   constructor(r, g, b, a) {
-    if(r !== undefined && g !== undefined && b !== undefined) {
+    if (r !== undefined && g !== undefined && b !== undefined) {
       this.r = r;
       this.g = g;
       this.b = b;
-      if(a !== undefined) {
+      if (a !== undefined) {
         this.a = a;
       }
     }
@@ -45,10 +44,10 @@ class Color {
   almostEquals(other, delta) {
     delta = delta === undefined ? 64 : delta
     const actualDelta = Math.sqrt(
-        Math.pow(this.r - other.r, 2)
-        + Math.pow(this.g - other.g, 2)
-        + Math.pow(this.b - other.b, 2)
-        + Math.pow(this.a - other.a, 2)
+      Math.pow(this.r - other.r, 2)
+      + Math.pow(this.g - other.g, 2)
+      + Math.pow(this.b - other.b, 2)
+      + Math.pow(this.a - other.a, 2)
     );
 
     return actualDelta <= delta;
@@ -74,20 +73,19 @@ function getPixel(imageData, point, color) {
   );
 }
 
+class Coloring {
+  constructor(canvasElement) {
+    this.canvas = canvasElement;
 
-export default class Coloring extends React.Component {
-  canvasId = 'coloring-canvas';
+    this.canvas.addEventListener('click', (e) => this.clickCanvas(e));
+  }
+
   get canvasWidth() {
     return this.canvas.getBoundingClientRect().width;
   }
 
   get canvasHeight() {
     return this.canvas.getBoundingClientRect().height;
-  }
-  canvasHeight = 400;
-
-  get canvas() {
-    return document.getElementById(this.canvasId)
   }
 
   getCtx() {
@@ -111,15 +109,21 @@ export default class Coloring extends React.Component {
   }
 
   drawImg() {
+
     var ctx = this.getCtx();
     var img = new Image();
-    img.onload = function() {
+    img.onload = () => {
       const scale = Math.min(
-        this.canvasHeight / img.clientHeight,
-        this.canvasWidth / img.clientWidth
+        this.canvasHeight / img.height,
+        this.canvasWidth / img.width
       )
+      const scaledWidth = img.width * scale;
+      const scaledHeight = img.height * scale;
+
+      const x = (this.canvasWidth - scaledWidth) / 2;
+      const y = (this.canvasHeight - scaledHeight) / 2
       console.log(scale);
-      ctx.drawImage(img, 0, 0, img.clientWidth * scale, img.clientHeight * scale);
+      ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
     };
     img.src = 'coloring_img/umberella-2013229_960_720.png';
   }
@@ -134,20 +138,20 @@ export default class Coloring extends React.Component {
     const queue = [point];
     const CARDINALS = [new Point(1, 0), new Point(0, 1), new Point(-1, 0), new Point(0, -1)]
 
-    while(queue.length > 0) {
+    while (queue.length > 0) {
       const cursor = queue.shift();
 
-      if(!(visited.has(cursor.toString()))) {
+      if (!(visited.has(cursor.toString()))) {
         visited.add(cursor.toString());
 
         setPixel(imageData, cursor, color);
 
-        for(const c of CARDINALS) {
+        for (const c of CARDINALS) {
           const coord = cursor.add(c);
-          if(coord.x >= 0 && coord.x < imageData.width
-              && coord.y >= 0 && coord.y < imageData.height
-              && !(visited.has(coord.toString()))
-              && getPixel(imageData, coord).almostEquals(replaceColor)) {
+          if (coord.x >= 0 && coord.x < imageData.width
+            && coord.y >= 0 && coord.y < imageData.height
+            && !(visited.has(coord.toString()))
+            && getPixel(imageData, coord).almostEquals(replaceColor)) {
             queue.push(coord);
           }
         }
@@ -157,24 +161,15 @@ export default class Coloring extends React.Component {
 
   }
 
-  handleLoad() {
+  start() {
     this.drawImg()
   }
-
-  componentDidMount() {
-    window.addEventListener('load', this.handleLoad.bind(this));
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('load', this.handleLoad.bind(this))
-  }
-
-  render() {
-    return (
-      <div className="App">
-        <canvas id={this.canvasId} width={this.canvasWidth} height={this.canvasHeight} onClick={e => this.clickCanvas(e)} style={{border: '1px solid'}}></canvas>
-      </div>
-    );
-  };
-
 };
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('canvas started');
+  const canvasElement = document.getElementById('canvas');
+  const coloring = new Coloring(canvasElement);
+  coloring.start();
+});
